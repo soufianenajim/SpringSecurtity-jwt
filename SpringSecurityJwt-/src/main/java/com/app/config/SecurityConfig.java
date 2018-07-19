@@ -1,5 +1,7 @@
 package com.app.config;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -7,10 +9,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
 import com.app.identity.*;
+
 import org.springframework.core.annotation.Order;
 
-
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @Order(1)
@@ -30,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //If Security is not working check application.properties if it is set to ignore
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	log.info("class: SecurityConfig methode:configure");
         http
         .exceptionHandling().and()
         .anonymous().and()

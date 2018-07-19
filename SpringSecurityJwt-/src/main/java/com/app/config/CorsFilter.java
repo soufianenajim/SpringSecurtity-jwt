@@ -1,13 +1,21 @@
 package com.app.config;
 
 import java.io.IOException;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.*;
 
+import com.app.api.MainController;
+
+@Slf4j
 public class CorsFilter implements javax.servlet.Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		log.info("class :CorsFilter methode:doFilter ");
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpServletRequest  req = (HttpServletRequest) request;
 

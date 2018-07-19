@@ -3,18 +3,23 @@ package com.app.config;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-import javax.servlet.FilterChain;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
+
 import java.io.*;
 import java.util.*;
+
+import lombok.extern.slf4j.Slf4j;
 import io.jsonwebtoken.JwtException;
+
 import com.app.identity.*;
 
 /*
 This filter checks if there is a token in the Request service header and the token is not expired
 it is applied to all the routes which are protected
 */
+@Slf4j
 public class VerifyTokenFilter extends GenericFilterBean {
 
     private final TokenUtil tokenUtil;
@@ -26,6 +31,7 @@ public class VerifyTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
+    	log.info("class: VerifyTokenFilter methode:doFilter");
         HttpServletRequest  request  = (HttpServletRequest)  req;
         HttpServletResponse response = (HttpServletResponse) res;
         try {

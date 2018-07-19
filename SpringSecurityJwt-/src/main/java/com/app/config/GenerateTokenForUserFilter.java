@@ -34,6 +34,7 @@ public class GenerateTokenForUserFilter extends AbstractAuthenticationProcessing
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException, JSONException {
+    	log.info("class: GenerateTokenForUserFilter methode:attemptAuthentication");
         try{
             String jsonString = IOUtils.toString(request.getInputStream(), "UTF-8");
             /* using org.json */
@@ -42,10 +43,11 @@ public class GenerateTokenForUserFilter extends AbstractAuthenticationProcessing
             String password = userJSON.getString("password");
             String browser = request.getHeader("User-Agent")!= null?request.getHeader("User-Agent"):"";
             String ip = request.getRemoteAddr();
-            log.info("\nip:{} \nbrowser:{} \n----",ip,browser);
+            log.info("\nip:{} \nbrowser1:{} \n----",ip,browser);
 
             //final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken("demo", "demo");
             final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+            
             return getAuthenticationManager().authenticate(authToken); // This will take to successfulAuthentication or faliureAuthentication function
         }
         catch( JSONException | AuthenticationException e){
@@ -55,7 +57,9 @@ public class GenerateTokenForUserFilter extends AbstractAuthenticationProcessing
 
     @Override
     protected void successfulAuthentication ( HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication authToken) throws IOException, ServletException {
+    	log.info("successfulAuthentication");
         SecurityContextHolder.getContext().setAuthentication(authToken);
+        log.info("class: GenerateTokenForUserFilter methode:successfulAuthentication");
         /*
         JSONObject jsonResp = new JSONObject();
         TokenUser tokenUser = (TokenUser)authToken.getPrincipal();
