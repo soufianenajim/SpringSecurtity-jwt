@@ -9,14 +9,19 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.*;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.app.repo.*;
+import com.app.config.GenerateTokenForUserFilter;
 import com.app.model.*;
 import com.app.model.session.*;
 import com.app.model.response.*;
 import com.app.model.user.*;
+
 import static com.app.model.response.OperationResponse.*;
 
 /*
@@ -25,7 +30,7 @@ This is a dummy rest controller, for the purpose of documentation (/session) pat
  - If Security is enabled then SessionFilter.java is invoked
  - Enabling and Disabling Security is done at config/applicaton.properties 'security.ignored=/**'
 */
-
+@Slf4j
 @RestController
 @Api(tags = {"Authentication"})
 public class SessionController {
@@ -40,7 +45,10 @@ public class SessionController {
         User user = userRepo.findOneByUserIdAndPassword(login.getUsername(), login.getPassword()).orElse(null);
         SessionResponse resp = new SessionResponse();
         SessionItem sessionItem = new SessionItem();
+       log.info("user", user);
+      
         if (user != null){
+        	 System.out.println("test--------");
             sessionItem.setToken("xxx.xxx.xxx");
             sessionItem.setUserId(user.getUserId());
             sessionItem.setFirstName(user.getFirstName());

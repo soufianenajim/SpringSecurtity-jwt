@@ -79,4 +79,11 @@ public class User {
     public String getFullName(){
         return this.firstName + this.lastName;
     }
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", password=" + password
+				+ ", company=" + company + ", firstName=" + firstName + "]";
+	}
+    
 }
